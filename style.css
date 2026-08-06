@@ -532,20 +532,22 @@ h2{ font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin-bottom: 16px; }
 }
 
 /* Mobile hero */
-@media (max-width: 768px){
-  .hero{ min-height: 500px; }
-  .hero-frame{ display: none; }
-  .hero-features{ bottom: 70px; gap: 8px; }
-  .hero-feature-pill{ padding: 6px 12px; font-size: 0.7rem; }
-  .hero-content h1{ font-size: clamp(1.8rem, 7vw, 2.8rem); }
-  .hero-content .hero-subtitle{ font-size: 0.95rem; }
-  .hero .btn{ padding: 12px 24px; font-size: 0.85rem; }
-}
+@media (max-width: 768px){ 
+  .hero{ min-height: 500px; } 
+  .hero-frame{ display: none; } 
+  .hero-features{ bottom: 70px; gap: 8px; padding: 0 16px; max-width: 95%; } 
+  .hero-feature-pill{ padding: 6px 12px; font-size: 0.7rem; } 
+  .hero-content h1{ font-size: clamp(1.8rem, 7vw, 2.8rem); } 
+  .hero-content .hero-subtitle{ font-size: 0.95rem; } 
+  .hero .btn{ padding: 12px 24px; font-size: 0.85rem; } 
+} 
 
-@media (max-width: 600px){
-  .hero-features{ display: none; }
-  .hero-scroll-line{ display: none; }
-}
+
+@media (max-width: 600px){ 
+.hero-features{ bottom: 80px; gap: 8px; max-width: 95%; } 
+.hero-feature-pill{ padding: 6px 12px; font-size: 0.7rem; } 
+.hero-scroll-line{ display: none; } } 
+
 
 /* ==============
    ABOUT SECTION
