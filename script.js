@@ -1,3 +1,94 @@
+/* ============================================================
+   HERO SLIDER — Enhanced with Ken Burns, smooth transitions
+   ============================================================ */
+(function() {
+  const slider = document.getElementById('heroSlider');
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('sliderDots');
+  const prevBtn = document.getElementById('prevSlide');
+  const nextBtn = document.getElementById('nextSlide');
+
+  let current = 1; // Start at index 1 (second slide, which has is-active)
+  let interval;
+  let isTransitioning = false;
+  const delay = 5000;
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    if (i === current) btn.classList.add('is-active');
+    btn.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(btn);
+  });
+
+  const dots = dotsContainer.querySelectorAll('button');
+
+  function updateSlides() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('is-active', i === current);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === current);
+    });
+
+    setTimeout(() => { isTransitioning = false; }, 1200);
+  }
+
+  function nextSlide() {
+    current = (current + 1) % slides.length;
+    updateSlides();
+  }
+
+  function prevSlide() {
+    current = (current - 1 + slides.length) % slides.length;
+    updateSlides();
+  }
+
+  function goToSlide(index) {
+    current = index;
+    updateSlides();
+    resetInterval();
+  }
+
+  function startInterval() {
+    interval = setInterval(nextSlide, delay);
+  }
+
+  function resetInterval() {
+    clearInterval(interval);
+    startInterval();
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetInterval(); });
+  if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  slider.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  slider.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+      resetInterval();
+    }
+  }, { passive: true });
+
+  startInterval();
+})();
+
 /* ========================
    MOBILE MENU - Hamburger 
    ======================== */
